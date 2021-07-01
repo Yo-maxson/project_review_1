@@ -26,7 +26,7 @@ def get_parser_clothes():
             items = item.find('a', class_='name').get_text(strip=True)
             url = HOST + item.find('a', class_='name').get('href')
             price = item.find('span', class_='current-price').get_text(strip=True)
-            size = item.find('div', class_='option-set').get_text(strip=True).split("/")
+            size = item.find('div', class_='option-set').get_text(strip=True)
             clothes_img = HOST + item.find('div', class_='image').find('img').get('src')
             save_clothes(items,url,price,size,clothes_img)
 
