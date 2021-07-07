@@ -3,38 +3,46 @@ import requests
 from bs4 import BeautifulSoup
 
 from webapp.model import db, Clothes
+'#для создания ссылки на товар'
+HOST = 'https://creamshop.ru' 
 
-HOST= 'https://creamshop.ru' #для создания ссылки на товар
 
 def get_html(url):
     try:
         result = requests.get(url)
         result.raise_for_status()
-        return result.text #если все ок, то результат страницы тут
+        '#если все ок, то результат страницы тут'
+        return result.text
     except(requests.RequestException, ValueError):
         return False
-
 
 
 def get_parser_clothes():
     html = get_html("https://creamshop.ru/store/clothing/?SHOWALL_1=1")
     if html:
         soup = BeautifulSoup(html, 'html.parser')
-        items = soup.find_all('div', class_='products-list__item') # поиск нужной карточки объекта
-        #clothes = []
+        '# поиск нужной карточки объекта'
+        items = soup.find_all('div', class_='products-list__item')
+        '#clothes = []'
         for item in items:
             items = item.find('a', class_='name').get_text(strip=True)
             url = HOST + item.find('a', class_='name').get('href')
             price = item.find('span', class_='current-price').get_text(strip=True)
             size = item.find('div', class_='option-set').get_text(strip=True)
             clothes_img = HOST + item.find('div', class_='image').find('img').get('src')
-            save_clothes(items,url,price,size,clothes_img)
+            save_clothes(items, url, price, size, clothes_img)
+
 
 def save_clothes(items, url, price, size, clothes_img):
-    clothes_clothes = Clothes(items=items, url=url, price=price,size=size, clothes_img=clothes_img)#создание объекта и передача значение полей
-    db.session.add(clothes_clothes)
-    db.session.commit()
-  
+    Clothes_exists = Clothes.query.filter(Clothes.url == url).count()
+    print(Clothes_exists)
+    '#проверка есть ли вещь с таким url'
+    if not Clothes_exists:
+        '#создание объекта и передача значение полей'
+        clothes_clothes = Clothes(items=items, url=url, price=price, size=size, clothes_img=clothes_img)
+        db.session.add(clothes_clothes)
+        db.session.commit()
+
 
 
 
