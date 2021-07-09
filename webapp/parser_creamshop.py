@@ -2,7 +2,8 @@
 import requests
 from bs4 import BeautifulSoup
 
-from webapp.model import db, Clothes
+from webapp.db import db, Clothes
+from webapp.clothes.models import Clothes
 '#для создания ссылки на товар'
 HOST = 'https://creamshop.ru' 
 

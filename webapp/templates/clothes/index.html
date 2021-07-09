@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div class="row">
+            <div class="col-8">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    <div class="alert alert-warning" role="alert">
+                        {% for message in messages %}
+                            {{ message }}<br>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
+                <h2>Creamshop</h2>
+                {% for clothes in clothes_list %}
+                <h3><a href={{clothes.url}}>{{ clothes.items }}</a></h3>
+                <p><img src={{clothes.clothes_img}} alt={{clothes.title}} width="150" height="90"></p>
+                <p>{{ clothes.price }}</p>
+                <p>{{ clothes.size }}</p>
+                
+                <hr />
+                {% endfor %}
+            </div>
+            <div class="col-4"> 
+                <h2>Прогноз погоды
+                {% if weather %}
+                    {{ weather['temp_C'] }}, ощущается как {{ weather['FeelsLikeC'] }}
+                {% else %}
+                    Сервис погоды временно недоступен
+                {% endif %}</h2>
+            </div>
+    </div>
+{% endblock %}
