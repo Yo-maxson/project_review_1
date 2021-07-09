@@ -1,6 +1,6 @@
 from flask import Flask, blueprints, flash, render_template, redirect, url_for
 from flask_login import LoginManager, current_user, login_required
-
+from flask_migrate import Migrate
 
 from webapp.db import db
 from webapp.admin.views import blueprint as admin_blueprint
@@ -15,6 +15,7 @@ def create_app():
     '#Используем файл конфигурации'
     app.config.from_pyfile('config.py')
     db.init_app(app)
+    migrate = Migrate(app, db)
 
     login_manager = LoginManager()
     login_manager.init_app(app)
@@ -27,14 +28,19 @@ def create_app():
     def load_user(user_id):
         return User.query.get(user_id)
 
-
-    
-
     return app
 
-#запуск сервера:
+# запуск сервера:
 # в терминале --> export FLASK_APP=__init__.py
 # set FLASK_APP=webapp && set FLASK_ENV=development && set FLASK_DEBUG=1 && flask run
 
-#pip freeze покажет что установлено
+# pip freeze покажет что установлено
 # pip freeze > requirements.txt перезапись в файл
+
+# export FLASK_APP=webapp && flask db init создание папки миграций
+
+# move webapp.db webapp.db.old переименовывание webapp
+
+# set FLASK_APP=webapp && flask db migrate -m "users and clothes tables" миграция
+
+# ./run.bat запуск приложения
