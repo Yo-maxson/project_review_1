@@ -2,10 +2,10 @@
 import requests
 from bs4 import BeautifulSoup
 
-from webapp.db import db, Clothes
-from webapp.clothes.models import Clothes
+from db import db
+from clothes.models import Clothes
 '#для создания ссылки на товар'
-HOST = 'https://creamshop.ru' 
+HOST = 'https://creamshop.ru'
 
 
 def get_html(url):
@@ -29,7 +29,11 @@ def get_parser_clothes():
             items = item.find('a', class_='name').get_text(strip=True)
             url = HOST + item.find('a', class_='name').get('href')
             price = item.find('span', class_='current-price').get_text(strip=True)
-            size = item.find('div', class_='option-set').get_text(strip=True)
+            all_sizes = item.find('div', class_='option-set').findall('label')
+            size_list = []
+            for size in all_sizes:
+                size_list.append(size.get_text(strip=True))
+            size = " ".join(all_sizes)
             clothes_img = HOST + item.find('div', class_='image').find('img').get('src')
             save_clothes(items, url, price, size, clothes_img)
 

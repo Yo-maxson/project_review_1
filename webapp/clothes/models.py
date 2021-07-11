@@ -1,4 +1,4 @@
-from webapp.db import db
+from db import db
 
 class Clothes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
