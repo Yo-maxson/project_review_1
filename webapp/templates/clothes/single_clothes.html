@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <div class="row">
+            <div class="col-8 clothes-content">
+                <p><img src={{clothes.clothes_img}}></p>
+                {{ clothes.text|safe }}
+                <h3><a href={{clothes.url}}>->Покупаем тут<-</a></h3>
+            </div>
+            <div class="col-4"> 
+                <h2>Другие вещи</h2>
+            </div>
+    </div>
+{% endblock %}

@@ -2,7 +2,7 @@ from flask import Flask, blueprints, flash, render_template, redirect, url_for
 from flask_login import LoginManager, current_user, login_required
 from flask_migrate import Migrate
 
-from db import db
+from webapp.db import db
 from webapp.admin.views import blueprint as admin_blueprint
 from webapp.clothes.views import blueprint as clothes_blueprint
 from webapp.user.models import User

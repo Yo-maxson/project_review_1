@@ -2,8 +2,8 @@
 import requests
 from bs4 import BeautifulSoup
 
-from db import db
-from clothes.models import Clothes
+from webapp.db import db
+from webapp.clothes.models import Clothes
 '#для создания ссылки на товар'
 HOST = 'https://creamshop.ru'
 
@@ -15,6 +15,7 @@ def get_html(url):
         '#если все ок, то результат страницы тут'
         return result.text
     except(requests.RequestException, ValueError):
+        print('Сетевая ошибка')
         return False
 
 
