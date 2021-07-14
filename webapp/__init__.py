@@ -44,3 +44,5 @@ def create_app():
 # set FLASK_APP=webapp && flask db migrate -m "users and clothes tables" миграция
 
 # ./run.bat запуск приложения
+
+#cygwin остановить команду
