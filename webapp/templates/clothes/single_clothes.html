@@ -5,6 +5,28 @@
             <div class="col-8 clothes-content">
                 <p><img src={{clothes.clothes_img}}></p>
                 {{ clothes.text|safe }}
+                {% if clothes.comments %}
+                    <h3>Комментарии:</h3>
+                    {% for comment in clothes.comments %}
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text">{{ comment.text }}</p>
+                            <p class="card-text">
+                                <small>Опубликовано: {{ comment.created.strftime('%d.%m.%Y') }} | 
+                                    Автор: {{ comment.user.username }}</small>
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                 {% endif %}
+                 <form action="{{ url_for('clothes.add_comment') }}" method="POST">
+                    {{ comment_form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ comment_form.comment_text.label }}
+                        {{ comment_form.comment_text() }}
+                    </div>
+                    {{ comment_form.submit() }}
+                </form>
                 <h3><a href={{clothes.url}}>->Покупаем тут<-</a></h3>
             </div>
             <div class="col-4"> 

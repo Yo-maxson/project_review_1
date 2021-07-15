@@ -1,5 +1,6 @@
 from flask import abort, Blueprint, current_app, render_template
 
+from webapp.clothes.forms import CommentForm
 from webapp.clothes.models import Clothes
 from webapp.weather import weather_by_city
 
@@ -19,4 +20,10 @@ def single_clothes(clothes_id):
     my_clothes = Clothes.query.filter(Clothes.id == clothes_id).first()
     if not my_clothes:
         abort(404)
-    return render_template('clothes/single_clothes.html', page_title=my_clothes.items, clothes=my_clothes)
+    comment_form = CommentForm(clothes_id=my_clothes.id)
+    return render_template('clothes/single_clothes.html', page_title=my_clothes.items, clothes=my_clothes, comment_form=comment_form)
+
+
+@blueprint.route('/clothes/comment', methods=['POST'])
+def add_comment():
+    pass

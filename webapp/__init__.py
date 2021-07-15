@@ -45,4 +45,9 @@ def create_app():
 
 # ./run.bat запуск приложения
 
-#cygwin остановить команду
+# cygwin остановить команду
+
+#  set FORKED_BY_MULTIPROCESSING=1 && celery -A tasks worker --loglevel=info
+# celery -A tasks worker -l info -P eventlet
+
+# celery -A tasks worker -l info -P gevent

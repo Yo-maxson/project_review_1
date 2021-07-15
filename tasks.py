@@ -1,4 +1,5 @@
 from celery import Celery
+from celery.schedules import crontab
 
 from webapp import create_app
 from webapp.clothes.parsers import cream
@@ -13,7 +14,13 @@ def cream_snippets():
     with flask_app.app_context():
         cream.get_clothes_snippets()
 
+
 @celery_app.task
 def cream_contenty():
     with flask_app.app_context():
         cream.get_clothes_discription()
+
+@celery_app.on_after_configure.connect
+def setup_periodic_tasks(sender, **kwargs):
+    sender.add_periodic_task(crontab(minute='*/1'), cream_snippets.s())
+    sender.add_periodic_task(crontab(minute='*/1'), cream_contenty.s())

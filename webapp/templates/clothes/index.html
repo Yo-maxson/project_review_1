@@ -15,6 +15,7 @@
                 <h2>Creamshop</h2>
                 {% for clothes in clothes_list %}
                 <h3><a href="{{ url_for('clothes.single_clothes', clothes_id=clothes.id) }}">{{ clothes.items }}</a></h3>
+                <p> | Коментарии: {{ clothes.comments_count() }} </p>
                 <p><img src={{clothes.clothes_img}} alt={{clothes.title}} width="150" height="90"></p>
                 <p>{{ clothes.price }}</p>
                 <p>{{ clothes.size }}</p>
