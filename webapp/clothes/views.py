@@ -1,8 +1,11 @@
-from flask import abort, Blueprint, current_app, render_template
+from flask import abort, Blueprint, current_app, flash, render_template, redirect, request, url_for
+from flask_login import current_user, login_required
 
+from webapp.db import db
 from webapp.clothes.forms import CommentForm
-from webapp.clothes.models import Clothes
+from webapp.clothes.models import Comment, Clothes
 from webapp.weather import weather_by_city
+from webapp.utils import get_redirect_target
 
 blueprint = Blueprint('clothes', __name__)
 
@@ -25,5 +28,19 @@ def single_clothes(clothes_id):
 
 
 @blueprint.route('/clothes/comment', methods=['POST'])
+@login_required
 def add_comment():
-    pass
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(text=form.comment_text.data, clothes_id=form.clothes_id.data, user_id=current_user.id)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Комментарий успешно добавлен')
+    else:
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash('Ошибка в заполнении поля "{}": - {}'.format(
+                    getattr(form, field).label.text,
+                    error
+                ))
+    return redirect(get_redirect_target())
