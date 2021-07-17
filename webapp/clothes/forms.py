@@ -13,4 +13,3 @@ class CommentForm(FlaskForm):
     def validate_clothes_id(selg, clothes_id):
         if not Clothes.query.get(clothes_id.data):
             raise ValidationError('Вещи с таким id не существует')
-            

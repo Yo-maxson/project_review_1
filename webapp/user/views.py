@@ -27,7 +27,9 @@ def process_login():
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             flash('Вы успешно вошли на сайт')
-            return redirect(get_redirect_target())        
+            return redirect(url_for('clothes.index'))
+            #return redirect(get_redirect_target())
+    
     flash('Неправильное имя пользователя или пароль')
     return redirect(url_for('user.login'))
 
