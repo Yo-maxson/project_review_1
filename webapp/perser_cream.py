@@ -19,8 +19,6 @@ def get_pages_count(html):# определение количества стра
     soup = BeautifulSoup(html, 'html.parser')
     pagination = soup.find('div', class_='modern-page-navigation').find_all("a") #попытка пагинации :(
     print('size', len(pagination))
-    # for list in range(len(pagination)):
-    #     print(pagination[list])
     if len(pagination) > 1:
         return len(pagination) - 1    
     else:

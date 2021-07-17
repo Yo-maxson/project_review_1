@@ -19,7 +19,7 @@ def get_html(url):
 
 def save_clothes(items, url, price, size, clothes_img):
     Clothes_exists = Clothes.query.filter(Clothes.url == url).count()
-    # проверка есть ли вещь с таким url
+
     if not Clothes_exists:
         '#создание объекта и передача значение полей'
         clothes_clothes = Clothes(items=items, url=url, price=price, size=size, clothes_img=clothes_img)
