@@ -3,18 +3,11 @@
 {% block content %}
         <div class="row">
             <div class="col-8">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                    <div class="alert alert-warning" role="alert">
-                        {% for message in messages %}
-                            {{ message }}<br>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                {% endwith %}
+                {% include('messages.html') %}
                 <h2>Creamshop</h2>
                 {% for clothes in clothes_list %}
-                <h3><a href={{clothes.url}}>{{ clothes.items }}</a></h3>
+                <h3><a href="{{ url_for('clothes.single_clothes', clothes_id=clothes.id) }}">{{ clothes.items }}</a></h3>
+                <p> | Коментарии: {{ clothes.comments_count() }} </p>
                 <p><img src={{clothes.clothes_img}} alt={{clothes.title}} width="150" height="90"></p>
                 <p>{{ clothes.price }}</p>
                 <p>{{ clothes.size }}</p>

@@ -29,18 +29,3 @@ def create_app():
         return User.query.get(user_id)
 
     return app
-
-# запуск сервера:
-# в терминале --> export FLASK_APP=__init__.py
-# set FLASK_APP=webapp && set FLASK_ENV=development && set FLASK_DEBUG=1 && flask run
-
-# pip freeze покажет что установлено
-# pip freeze > requirements.txt перезапись в файл
-
-# export FLASK_APP=webapp && flask db init создание папки миграций
-
-# move webapp.db webapp.db.old переименовывание webapp
-
-# set FLASK_APP=webapp && flask db migrate -m "users and clothes tables" миграция
-
-# ./run.bat запуск приложения

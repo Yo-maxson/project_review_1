@@ -19,8 +19,6 @@ def get_pages_count(html):# определение количества стра
     soup = BeautifulSoup(html, 'html.parser')
     pagination = soup.find('div', class_='modern-page-navigation').find_all("a") #попытка пагинации :(
     print('size', len(pagination))
-    # for list in range(len(pagination)):
-    #     print(pagination[list])
     if len(pagination) > 1:
         return len(pagination) - 1    
     else:
@@ -39,7 +37,7 @@ def get_content(html): #создаем объект и работаем в эт�
             'items': item.find('a', class_='name').get_text(strip=True),
             'link': HOST + item.find('a', class_='name').get('href'),
             'price': item.find('span', class_='current-price').get_text(strip=True),
-            'size':  item.find('div', class_='option-set').get_text(strip=True).split("/"),###не разделяет размеры!
+            'size':  item.find('div', class_='option-set').get_text(strip=True),###не разделяет размеры!
             'clothes_img': item.find('div', class_='image').find('img').get('src')
         })
 
